@@ -4,8 +4,20 @@
 		<button id='bttn1'>Click me!</button>
 		<button id='bttn2'>Click me!</button>
 		<button id='bttn3'>Click me!</button>
+		<button id='bttn4'>Click me!</button>
+		<button id='bttn5'>Click me!</button>
+		<button id='bttn6'>Click me!</button>
+		<button id='bttn7'>Click me!</button>
+		<button id='bttn8'>Click me!</button>
+		<button id='bttn9'>Click me!</button>
+		<button id='bttn10'>Click me!</button>
+		<button id='bttn11'>Click me!</button>
+		<button id='bttn12'>Click me!</button>
+		<button id='bttn13'>Click me!</button>
+		<button id='bttn14'>Click me!</button>
+		<button id='bttn15'>Click me!</button>
 		<script>
-			var bttns_no = 3;
+			var bttns_no = 15;
 			var countDown = 0
 
 			var bttn_m = "";
@@ -24,9 +36,13 @@
 		      bttn_m += "&bx1=" +x1+ "&by1=" +y1+ "&bx2=" +x2+ "&by2=" +y2;
 		    }
 
+		    var y = 50;
 		    for (let i=1; i<=bttns_no; i++){
-		    	let x = 50 * i;
-		 		set_bttn(i, x,x, 100+x,100+x);
+			if (i % 5 === 0){
+				y += 100;
+			}
+		    	let x = 100 + 100 * (i % 5);
+		 		set_bttn(i, x,y, 100+x,100+y);
 		 	}
 
 			fn = function(event){
@@ -41,7 +57,7 @@
 		      let bools = request.responseText.split(',');
 		      for (let i=0; i<bools.length; i++){
 		     		bttn = document.getElementById("bttn" + (i+1));
-			      if (bools[i] == 'False'){
+			      if (bools[i] == 'True'){
 			      	bttn.style.backgroundColor = 'lightblue';
 			      } else {
 		      		  bttn.style.backgroundColor = 'darkred';	
