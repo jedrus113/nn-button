@@ -1,0 +1,70 @@
+<html><head><title>AI Button Validator</title></head>
+  <body>
+	  <div>Button pressed: <span id='message'></span></div>
+		<button id='bttn1'>Click me!</button>
+		<button id='bttn2'>Click me!</button>
+		<button id='bttn3'>Click me!</button>
+		<script>
+			var bttns_no = 3;
+			var countDown = 0
+
+			var bttn_m = "";
+			var url = '/req'
+
+			set_bttn = function(id,x1,y1,x2,y2){
+				bttn = document.getElementById("bttn"+id);
+
+			  bttn.style.position = "absolute";
+		      bttn.style.top = x1;
+		      bttn.style.left = y1;
+		      bttn.style.width = y2 - y1;
+		      bttn.style.height = x2 - x1;
+		      bttn.style.backgroundColor = 'blue';
+
+		      bttn_m += "&bx1=" +x1+ "&by1=" +y1+ "&bx2=" +x2+ "&by2=" +y2;
+		    }
+
+		    for (let i=1; i<=bttns_no; i++){
+		    	let x = 50 * i;
+		 		set_bttn(i, x,x, 100+x,100+x);
+		 	}
+
+			fn = function(event){
+		      var request = new XMLHttpRequest();
+					
+		      el = document.getElementById('message');
+		      let m = "?x=" + event.clientX;
+		      m = m + "&y=" + event.clientY;
+		      request.open('GET',  url + m + bttn_m, false);
+		      request.send();
+		      el.innerHTML = request.responseText;
+		      let bools = request.responseText.split(',');
+		      for (let i=0; i<bools.length; i++){
+		     		bttn = document.getElementById("bttn" + (i+1));
+			      if (bools[i] == 'False'){
+			      	bttn.style.backgroundColor = 'lightblue';
+			      } else {
+		      		  bttn.style.backgroundColor = 'darkred';	
+			      }
+			  }
+		      countDown = 5
+			}
+			document.body.addEventListener('click', fn, true);
+
+			window.setInterval(function(){
+				if (countDown == 0){return }
+				countDown -= 1;
+				if (countDown != 0){return }
+				for (let i=1; i<=bttns_no; i++){
+					bttn = document.getElementById("bttn" + i);
+					if(bttn.style.backgroundColor == 'lightblue'){
+						bttn.style.backgroundColor = 'blue'
+					}
+					else if(bttn.style.backgroundColor == 'darkred'){
+			      		bttn.style.backgroundColor = 'red'
+			      	}
+			      }
+			}, 200);
+
+		</script>
+</body></html>
